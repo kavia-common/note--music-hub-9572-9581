@@ -1,41 +1,321 @@
 /**
- * WHAT IS THIS FILE?
- *
- * Globally applied styles for the ultralight Qwik template.
- * Uses a minimalistic light theme with specified color scheme.
+ * Modern, light Notes & Music Player app theme.
+ * Uses specified primary, secondary, accent colors.
  */
-
 :root {
-  --primary-color: #000000;
-  --secondary-color: #333333;
-  --accent-color: #0078d4;
-  --background-color: #ffffff;
+  --primary-color: #1E40AF;
+  --secondary-color: #64748B;
+  --accent-color: #D97706;
+  --background-color: #f3f6fa;
+  --sidebar-width: 250px;
+  --player-height: 75px;
+  --radius-md: 10px;
+  --radius-sm: 5px;
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
-html {
-  line-height: 1.5;
-  -webkit-text-size-adjust: 100%;
+html, body {
   font-family:
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    "Helvetica Neue",
-    Arial,
-    "Noto Sans",
-    sans-serif;
-}
-
-body {
+    ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--background-color);
+  color: var(--primary-color);
   margin: 0;
   padding: 0;
-  background-color: var(--background-color);
-  color: var(--primary-color);
-  line-height: inherit;
-}
-
-* {
   box-sizing: border-box;
 }
+*, *:before, *:after { box-sizing: inherit; }
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: var(--player-height);
+}
+.sidebar {
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
+  background: #fff;
+  border-right: 1.5px solid #e2e8f0;
+  padding: 2rem 1rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  z-index: 20;
+}
+.sidebar .logo {
+  font-weight: 800;
+  color: var(--primary-color);
+  font-size: 2rem;
+  letter-spacing: -0.04em;
+  margin-bottom: 2rem;
+}
+.sidebar .nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.sidebar .nav-btn {
+  font: inherit;
+  color: var(--primary-color);
+  background: none;
+  border: none;
+  padding: 0.7rem 1rem;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast);
+  cursor: pointer;
+}
+.sidebar .nav-btn.active,
+.sidebar .nav-btn:hover {
+  background: var(--primary-color);
+  color: #fff;
+}
+.sidebar .bottom-area {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.sidebar .userbox {
+  background: #f5faff;
+  border-radius: var(--radius-sm);
+  padding: 0.7rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1rem;
+}
+.main-content {
+  flex: 1 1 0;
+  padding: 3rem 2.5rem 2rem 2.5rem;
+  background: var(--background-color);
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.header .searchbox {
+  width: 300px;
+  padding: 0.6rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: var(--radius-sm);
+  transition: border-color var(--transition-fast);
+  font-size: 1.05rem;
+  background: #fff;
+  outline: none;
+}
+.header .searchbox:focus { border-color: var(--primary-color); }
+.new-note-btn {
+  padding: 0.6rem 1.3rem;
+  background: var(--accent-color);
+  color: #fff;
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+.new-note-btn:hover { background: #fbbf24; }
+.notes-list-section {
+  padding-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  flex: 1 1 0;
+  min-height: 0;
+}
+.notes-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.note-row {
+  display: flex;
+  gap: 1.3rem;
+  align-items: flex-start;
+  padding: 1rem;
+  transition: background var(--transition-fast);
+  background: #fff;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 0.5px 4px #d1d5db42;
+  cursor: pointer;
+  position: relative;
+  border: 1.3px solid transparent;
+}
+.note-row.selected,
+.note-row:hover {
+  background: #e4ebfc;
+  border-color: var(--primary-color);
+}
+.note-title {
+  font-weight: 600;
+  color: var(--primary-color);
+}
+.note-created {
+  color: var(--secondary-color);
+  font-size: 0.95rem;
+  margin-top: 2px;
+}
+.note-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 0.6rem;
+}
+.note-actions button {
+  background: var(--secondary-color);
+  color: #fff;
+  border: none;
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  font-size: 0.95rem;
+}
+.note-actions button.delete {
+  background: #e53e3e;
+}
+.notes-empty {
+  color: var(--secondary-color);
+  font-size: 1.1rem;
+  text-align: center;
+  margin: 1.5rem 0 0 0;
+}
+.note-editor-section {
+  margin-top: 2.5rem;
+  background: #fff;
+  border-radius: var(--radius-md);
+  padding: 2rem 2rem;
+  box-shadow: 0 1.5px 16px #64748b18;
+  min-height: 220px;
+  flex: 0 0 auto;
+}
+.note-editor-section .editor-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+.note-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.note-editor input,
+.note-editor textarea {
+  width: 100%;
+  font: inherit;
+  padding: 0.7rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1.3px solid #a0aec0;
+  font-size: 1.08rem;
+  background: #f9fafb;
+  transition: border var(--transition-fast);
+}
+.note-editor input:focus,
+.note-editor textarea:focus {
+  border-color: var(--secondary-color);
+  outline: none;
+}
+.note-editor .actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.save-btn {
+  background: var(--primary-color);
+  color: #fff;
+  padding: 0.6rem 2rem;
+  border-radius: var(--radius-md);
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+.save-btn:hover { background: #3451b2; }
+.cancel-btn {
+  background: #fff;
+  color: var(--secondary-color);
+  border: 1.5px solid var(--secondary-color);
+  padding: 0.6rem 1.25rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-weight: 500;
+}
+@media (max-width: 950px) {
+  .sidebar { display: none; }
+  .app-layout { padding-left: 0; }
+}
+@media (max-width: 750px) {
+  .main-content { padding: 1.2rem 0.2rem 2rem 0.2rem; }
+  .note-editor-section { padding: 1rem 0.7rem; }
+  .sidebar { display: none; }
+  .app-layout { flex-direction: column; }
+}
+@media (max-width: 650px) {
+  .main-content { padding: 7px 0 90px 0; }
+  .note-editor-section { padding: 0.7rem 0.1rem; }
+}
+.music-player-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  border-top: 2px solid #e2e8f0;
+  height: var(--player-height);
+  min-height: var(--player-height);
+  display: flex;
+  align-items: center;
+  padding: 0 1.2rem;
+  gap: 2.5rem;
+  z-index: 100;
+  box-shadow: 0 0.5px 14px #a3a7ad13;
+}
+.music-player-controls {
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+}
+.player-track-info {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.player-track-title {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--primary-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 320px;
+}
+.player-track-artist {
+  color: var(--secondary-color);
+  font-size: 0.98rem;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+.player-progress {
+  width: 180px;
+}
+@media (max-width: 600px) {
+  .music-player-bar {
+    padding: 0 0.2rem;
+    gap: 1rem;
+    min-height: 62px;
+    height: 62px;
+  }
+  .player-track-title, .player-track-artist { max-width: 125px; }
+  .player-progress { width: 90px;}
+}
+::-webkit-scrollbar { width: 8px; background: #e2e8f0; border-radius: 8px;}
+::-webkit-scrollbar-thumb { background: #b4c2e0; border-radius: 8px;}
